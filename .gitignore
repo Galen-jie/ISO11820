@@ -1,0 +1,76 @@
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# Build logs
+UpgradeLog.htm
+UpgradeLog*.htm
+
+# Backup files
+Backup/
+
+# Database files (user-specific data)
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+Data/Logs/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+
+# Visual Studio cache/options
+*.vsidx
+*.vspscc
+*.vssscc
+*.pidb
+*.boproj
+*.sln
+
+# ReSharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Rider
+.idea/
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# User-specific appsettings
+appsettings.Development.json
+appsettings.Local.json
