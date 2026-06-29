@@ -30,6 +30,7 @@ public class TestMaster : IDisposable
     public int TargetDuration { get; private set; } = 3600;
 
     private int _stableCounter = 0;
+    private int _heatingElapsedSeconds = 0;
     private double _ambTemp = 25.0;
     private double _preWeight = 0;
     private int _constPower = 0;
@@ -60,6 +61,7 @@ public class TestMaster : IDisposable
         _state = TestState.Preparing;
         _simulator.StartHeating();
         _stableCounter = 0;
+        _heatingElapsedSeconds = 0;
         StartWorker();
         AddMessage("加热开始");
         OnStateChanged(_state);
@@ -227,6 +229,12 @@ public class TestMaster : IDisposable
             _pidOutputHistory.Add(temps.PidOutput);
             if (_pidOutputHistory.Count > 1000) _pidOutputHistory.RemoveAt(0);
 
+            // 加热阶段也计时（用于曲线显示）
+            if (_state == TestState.Preparing || _state == TestState.Ready)
+            {
+                _heatingElapsedSeconds++;
+            }
+
             CheckStateTransition(temps);
 
             if (_state == TestState.Recording)
@@ -338,7 +346,9 @@ public class TestMaster : IDisposable
         var args = new DataBroadcastEventArgs
         {
             Tf1 = temps.Tf1, Tf2 = temps.Tf2, Ts = temps.Ts, Tc = temps.Tc, Tcal = temps.Tcal,
-            ElapsedSeconds = TotalTestTime, CurrentState = _state, TempDrift = tempDrift, PidOutput = temps.PidOutput
+            ElapsedSeconds = TotalTestTime,
+            HeatingElapsedSeconds = _heatingElapsedSeconds,
+            CurrentState = _state, TempDrift = tempDrift, PidOutput = temps.PidOutput
         };
         args.Messages.AddRange(_pendingMessages);
         _pendingMessages.Clear();

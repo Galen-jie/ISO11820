@@ -32,9 +32,14 @@ public class DataBroadcastEventArgs : EventArgs
     public double Tcal { get; set; }
 
     /// <summary>
-    /// 已记录秒数
+    /// 已记录秒数（记录状态）
     /// </summary>
     public int ElapsedSeconds { get; set; }
+
+    /// <summary>
+    /// 加热阶段秒数（从开始加热计时）
+    /// </summary>
+    public int HeatingElapsedSeconds { get; set; }
 
     /// <summary>
     /// 当前状态

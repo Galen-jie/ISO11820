@@ -252,8 +252,17 @@ public partial class MainForm : Form
 
         UpdateStatusDisplay(e.CurrentState);
 
-        if (e.CurrentState == TestState.Recording)
-            AddDataPoint(e.ElapsedSeconds, e.Tf1, e.Tf2, e.Ts, e.Tc);
+        // 加热阶段和记录阶段都显示温度曲线
+        if (e.CurrentState == TestState.Preparing || e.CurrentState == TestState.Ready)
+        {
+            AddDataPoint(e.HeatingElapsedSeconds, e.Tf1, e.Tf2, e.Ts, e.Tc);
+        }
+        else if (e.CurrentState == TestState.Recording)
+        {
+            // 记录阶段使用记录时间，延续加热阶段的时间轴
+            int totalHeatingTime = e.HeatingElapsedSeconds + e.ElapsedSeconds;
+            AddDataPoint(totalHeatingTime, e.Tf1, e.Tf2, e.Ts, e.Tc);
+        }
 
         foreach (var msg in e.Messages)
             AddSystemMessage(msg.Time, msg.Message, msg.Type);
@@ -369,7 +378,7 @@ public partial class MainForm : Form
             MessageBox.Show("请先保存上一次试验", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
-        try { _testMaster.StartRecording(); ClearPlot(); }
+        try { _testMaster.StartRecording(); }
         catch (Exception ex) { MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error); }
     }
 
