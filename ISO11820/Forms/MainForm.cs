@@ -359,7 +359,12 @@ public partial class MainForm : Form
         catch (Exception ex) { MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error); }
     }
 
-    private void BtnStopHeating_Click(object? sender, EventArgs e) { _testMaster.StopHeating(); }
+    private void BtnStopHeating_Click(object? sender, EventArgs e)
+    {
+        _testMaster.StopHeating();
+        // 停止加热后清除曲线，避免下次加热时数据叠加
+        ClearPlot();
+    }
 
     private void BtnStartRecording_Click(object? sender, EventArgs e)
     {

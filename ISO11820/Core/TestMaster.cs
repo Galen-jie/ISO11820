@@ -127,16 +127,10 @@ public class TestMaster : IDisposable
         _tempHistory.Clear();
         _pidOutputHistory.Clear();
         _csvFilePath = null;
+        _heatingElapsedSeconds = 0;
 
-        if (_state == TestState.Complete)
-        {
-            _state = TestState.Preparing;
-            StartWorker();
-        }
-        else
-        {
-            _state = TestState.Idle;
-        }
+        _state = TestState.Idle;
+        StopWorker();
         OnStateChanged(_state);
     }
 
