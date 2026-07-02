@@ -117,10 +117,10 @@ public class ExportService
         page.Size = PdfSharp.PageSize.A4;
         var gfx = XGraphics.FromPdfPage(page);
 
-        var titleFont = new XFont("Arial", 18, XFontStyleEx.Bold);
+        var titleFont = new XFont("Microsoft YaHei", 18, XFontStyleEx.Bold);
         gfx.DrawString("ISO 11820 Test Report", titleFont, XBrushes.Black, new XRect(0, 40, page.Width.Point, 30), XStringFormats.Center);
 
-        var infoFont = new XFont("Arial", 11, XFontStyleEx.Regular);
+        var infoFont = new XFont("Microsoft YaHei", 11, XFontStyleEx.Regular);
         int y = 80;
 
         gfx.DrawString($"Test ID: {record.TestId}", infoFont, XBrushes.Black, 50, y); y += 22;
@@ -132,7 +132,7 @@ public class ExportService
 
         y += 20;
         var judgment = TemperatureCalculator.GetJudgmentText(record.DeltaTf, record.LostWeightPer, record.FlameDuration);
-        var resultFont = new XFont("Arial", 14, XFontStyleEx.Bold);
+        var resultFont = new XFont("Microsoft YaHei", 14, XFontStyleEx.Bold);
         gfx.DrawString($"Result: {judgment}", resultFont, judgment == "合格" ? XBrushes.Green : XBrushes.Red, 50, y);
 
         document.Save(filePath);
